@@ -1,19 +1,22 @@
 {
   "name": "node_js-wetube",
   "version": "1.0.0",
-  "description": "Cloning Youtube with Vanilla and NodeJs",
+  "description": "Cloning Youtube with Vanilla and NOdeJS",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "node_js-wetube"
+    "url": "git+https://github.com/fleaflees/node_js-wetube.git"
   },
-  "keywords": [
-    "wetube"
-  ],
-  "author": "fleaflees",
+  "author": "feaflees",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fleaflees/node_js-wetube/issues"
+  },
+  "homepage": "https://github.com/fleaflees/node_js-wetube#readme",
   "dependencies": {
     "express": "^4.17.1"
-  },
-  "devDependencies": {}
+  }
 }
