@@ -1,11 +1,8 @@
 {
   "name": "node_js-wetube",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cloning Youtube with Vanilla and NodeJs",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "node_js-wetube"
@@ -17,5 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "devDependencies": {}
 }
