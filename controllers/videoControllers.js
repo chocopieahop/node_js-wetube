@@ -1,5 +1,3 @@
-import { videos } from "../db";
-import { query } from "express";
 import routes from "../routes";
 
 export const home = (req, res) => {
