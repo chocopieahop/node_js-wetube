@@ -1,14 +1,23 @@
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';">
+
 header.header
     .header__column
         a(href=routes.home)
             <i class="fab fa-youtube"></i>
     .header__column
         form(action=routes.search, method="get")
-            input(type="text",placeholder="search by term...", name="term")
+            input(type="text",placeholder="Search by term...", name="term")
     .header__column     
         ul
-            li
-                a(href=routes.join) Join
-            li
-                a(href=routes.login) Log In
-                    
+            if !user.isAuthenticated
+                li
+                    a(href=routes.join) Join
+                li
+                    a(href=routes.login) Log In
+            else
+                li
+                    a(href=`/videos/${routes.upload}`) Upoload        
+                li
+                    a(href=routes.userDetail(user.id)) Profile 
+                li
+                    a(href=routes.logout) Log Out
