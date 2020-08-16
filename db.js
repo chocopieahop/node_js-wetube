@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Connection, connection } from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
