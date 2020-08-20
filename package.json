@@ -21,18 +21,24 @@
   "dependencies": {
     "@babel/core": "^7.11.1",
     "@babel/node": "^7.10.5",
+    "autoprefixer": "^9.8.6",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "css-loader": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "helmet": "^4.0.0",
+    "mini-css-extract-plugin": "^0.10.0",
     "mongod": "^2.0.0",
     "mongoose": "^5.9.29",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "node-sass": "^4.14.1",
     "path": "^0.12.7",
-    "pug": "^3.0.0"
+    "postcss-loader": "^3.0.0",
+    "pug": "^3.0.0",
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.11.0",
@@ -46,7 +52,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.0.8",
     "nodemon": "^2.0.4",
-    "webpack": "^4.44.1",
+    "webpack": "^4.36.1",
     "webpack-cli": "^3.3.12"
   }
 }
