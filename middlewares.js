@@ -6,23 +6,22 @@ const multerVideo = multer({ dest: "uploads/videos/" });
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "WeTube";
   res.locals.routes = routes;
-  res.locals.user = req.user || null;
-  console.log(req.user);
+  res.locals.loggedUser = req.user || null;
   next();
 };
 
-export const onlyPublic = (req, res, next)=>{
-  if (req.user){
+export const onlyPublic = (req, res, next) => {
+  if (req.user) {
     res.redirect(routes.home);
-  }else{
+  } else {
     next();
   }
 };
 
-export const onlyPrivate =(req,res,next)=>{
-  if(req.user){
+export const onlyPrivate = (req, res, next) => {
+  if (req.user) {
     next();
-  }else{
+  } else {
     res.redirect(routes.home);
   }
 };
