@@ -34,6 +34,7 @@
     "express-session": "^1.17.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "get-blob-duration": "^1.1.2",
+    "github-avatar-url": "^2.0.0",
     "helmet": "^4.0.0",
     "mini-css-extract-plugin": "^0.10.0",
     "mongod": "^2.0.0",

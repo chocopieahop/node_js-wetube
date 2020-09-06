@@ -11,7 +11,6 @@ const OUTPUT_DIR = path.resolve(__dirname, "static");
 const config = {
   devtool: "cheap-module-source-map",
   entry: ["@babel/polyfill", ENTRY_FILE],
-  externals: ['axios'],
   mode: MODE,
   module: {
     rules: [
