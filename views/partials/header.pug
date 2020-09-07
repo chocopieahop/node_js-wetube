@@ -3,8 +3,9 @@
 header.header
     .header__wrapper
         .header__column
-            a(href=routes.home)
-                h2 🎬
+            .icon
+                a(href=routes.home)
+                    h2 🎬
         .header__column
             form(action=routes.search, method="get")
                 input(type="text",placeholder="Search by term...", name="term")

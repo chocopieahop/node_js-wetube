@@ -186,6 +186,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/styles.scss */ "./assets/scss/styles.scss");
 /* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _videoPlayer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./videoPlayer */ "./assets/js/videoPlayer.js");
+/* harmony import */ var _videoPlayer__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_videoPlayer__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _videoRecorder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./videoRecorder */ "./assets/js/videoRecorder.js");
 /* harmony import */ var _videoRecorder__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_videoRecorder__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _addComment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./addComment */ "./assets/js/addComment.js");
@@ -200,188 +201,54 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************!*\
   !*** ./assets/js/videoPlayer.js ***!
   \**********************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var get_blob_duration__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! get-blob-duration */ "./node_modules/get-blob-duration/dist/getBlobDuration.js");
-/* harmony import */ var get_blob_duration__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(get_blob_duration__WEBPACK_IMPORTED_MODULE_0__);
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/*! no static exports found */
+/***/ (function(module, exports) {
 
 var videoContainer = document.getElementById("jsVideoPlayer");
 var videoPlayer = document.querySelector("#jsVideoPlayer video");
 var playBtn = document.getElementById("jsPlayButton");
 var volumeBtn = document.getElementById("jsVolumeBtn");
 var fullScrnBtn = document.getElementById("jsFullScreen");
-var currentTime = document.getElementById("currentTime");
-var totalTime = document.getElementById("totalTime");
-var volumeRange = document.getElementById("jsVolume");
-
-var registerView = function registerView() {
-  var videoId = window.location.href.split("/videos/")[1];
-  fetch("/api/".concat(videoId, "/view"), {
-    method: "POST"
-  });
-};
 
 function handlePlayClick() {
   if (videoPlayer.paused) {
     videoPlayer.play();
-    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    playBtn.innerHTML = " ⏸";
   } else {
     videoPlayer.pause();
-    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    playBtn.innerHTML = " ▶";
   }
 }
 
 function handleVolumeClick() {
   if (videoPlayer.muted) {
     videoPlayer.muted = false;
-    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-    volumeRange.value = videoPlayer.volume;
+    volumeBtn.innerHTML = "🔊";
   } else {
-    volumeRange.value = 0;
     videoPlayer.muted = true;
-    volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+    volumeBtn.innerHTML = "🔈";
   }
 }
 
 function exitFullScreen() {
-  fullScrnBtn.innerHTML = '<i class="fas fa-expand"></i>';
+  fullScrnBtn.innerHTML = "🔳";
   fullScrnBtn.addEventListener("click", goFullScreen);
-
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }
+  document.exitFullscreen()["catch"](function (err) {
+    return Promise.resolve(err);
+  });
 }
 
 function goFullScreen() {
-  if (videoContainer.requestFullscreen) {
-    videoContainer.requestFullscreen();
-  } else if (videoContainer.mozRequestFullScreen) {
-    videoContainer.mozRequestFullScreen();
-  } else if (videoContainer.webkitRequestFullscreen) {
-    videoContainer.webkitRequestFullscreen();
-  } else if (videoContainer.msRequestFullscreen) {
-    videoContainer.msRequestFullscreen();
-  }
-
-  fullScrnBtn.innerHTML = '<i class="fas fa-compress"></i>';
+  videoContainer.requestFullscreen();
+  fullScrnBtn.innerHTML = "🔲";
   fullScrnBtn.removeEventListener("click", goFullScreen);
   fullScrnBtn.addEventListener("click", exitFullScreen);
 }
 
-var formatDate = function formatDate(seconds) {
-  var secondsNumber = parseInt(seconds, 10);
-  var hours = Math.floor(secondsNumber / 3600);
-  var minutes = Math.floor((secondsNumber - hours * 3600) / 60);
-  var totalSeconds = secondsNumber - hours * 3600 - minutes * 60;
-
-  if (hours < 10) {
-    hours = "0".concat(hours);
-  }
-
-  if (minutes < 10) {
-    minutes = "0".concat(minutes);
-  }
-
-  if (seconds < 10) {
-    totalSeconds = "0".concat(totalSeconds);
-  }
-
-  return "".concat(hours, ":").concat(minutes, ":").concat(totalSeconds);
-};
-
-function getCurrentTime() {
-  currentTime.innerHTML = formatDate(Math.floor(videoPlayer.currentTime));
-}
-
-function setTotalTime() {
-  return _setTotalTime.apply(this, arguments);
-}
-
-function _setTotalTime() {
-  _setTotalTime = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var duration, blob, totalTimeString;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (isFinite(videoPlayer.duration)) {
-              _context.next = 9;
-              break;
-            }
-
-            _context.next = 3;
-            return fetch(videoPlayer.src).then(function (response) {
-              return response.blob();
-            });
-
-          case 3:
-            blob = _context.sent;
-            _context.next = 6;
-            return get_blob_duration__WEBPACK_IMPORTED_MODULE_0___default()(blob);
-
-          case 6:
-            duration = _context.sent;
-            _context.next = 10;
-            break;
-
-          case 9:
-            duration = videoPlayer.duration;
-
-          case 10:
-            totalTimeString = formatDate(duration);
-            totalTime.innerHTML = totalTimeString;
-            setInterval(getCurrentTime, 1000);
-
-          case 13:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _setTotalTime.apply(this, arguments);
-}
-
-function handleEnded() {
-  registerView();
-  videoPlayer.currentTime = 0;
-  playBtn.innerHTML = '<i class="fas fa-play"></i>';
-}
-
-function handleDrag(event) {
-  var value = event.target.value;
-  videoPlayer.volume = value;
-
-  if (value >= 0.6) {
-    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-  } else if (value >= 0.2) {
-    volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-  } else {
-    volumeBtn.innerHTML = '<i class="fas fa-volume-off"></i>';
-  }
-}
-
 function init() {
-  videoPlayer.volume = 0.5;
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScrnBtn.addEventListener("click", goFullScreen);
-  videoPlayer.addEventListener("loadedmetadata", setTotalTime);
-  videoPlayer.addEventListener("ended", handleEnded);
-  volumeRange.addEventListener("input", handleDrag);
 }
 
 if (videoContainer) {
@@ -11149,81 +11016,6 @@ module.exports = __webpack_require__(/*! ../modules/_core */ "./node_modules/@ba
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
-module.exports = _asyncToGenerator;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/regenerator/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -12990,53 +12782,6 @@ module.exports = {
   trim: trim,
   stripBOM: stripBOM
 };
-
-/***/ }),
-
-/***/ "./node_modules/get-blob-duration/dist/getBlobDuration.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/get-blob-duration/dist/getBlobDuration.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: !0
-}), exports.default = getBlobDuration;
-
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js")),
-    _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-
-function getBlobDuration(e) {
-  return _getBlobDuration.apply(this, arguments);
-}
-
-function _getBlobDuration() {
-  return (_getBlobDuration = (0, _asyncToGenerator2.default)(_regenerator.default.mark(function e(r) {
-    var t, n;
-    return _regenerator.default.wrap(function (e) {
-      for (;;) switch (e.prev = e.next) {
-        case 0:
-          return t = document.createElement("video"), n = new Promise(function (e) {
-            return t.addEventListener("loadedmetadata", function () {
-              t.duration === 1 / 0 ? (t.currentTime = Number.MAX_SAFE_INTEGER, t.ontimeupdate = function () {
-                t.ontimeupdate = null, e(t.duration), t.currentTime = 0;
-              }) : e(t.duration);
-            });
-          }), t.src = "string" == typeof r || r instanceof String ? r : window.URL.createObjectURL(r), e.abrupt("return", n);
-
-        case 4:
-        case "end":
-          return e.stop();
-      }
-    }, e);
-  }))).apply(this, arguments);
-}
 
 /***/ }),
 

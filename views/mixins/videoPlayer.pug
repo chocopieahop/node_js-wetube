@@ -1,10 +1,13 @@
 mixin videoPlayer(video= {})
-    .videoPlayer
-        video(src=`/${video.src}`, autoplay)
+    .videoPlayer#jsVideoPlayer
+        video(src=`/${video.src}`)
         .videoPlayer__controls
             .videoPlayer__column
-                span   🔊
+                .icon
+                    span#jsVolumeBtn   🔊
             .videoPlayer__column
-                span    ▶
+                .icon
+                    span#jsPlayButton    ▶
             .videoPlayer__column
-                span    🔳
+                .icon
+                    span#jsFullScreen    🔳
