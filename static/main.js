@@ -348,33 +348,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var recorderContainer = document.getElementById("jsRecordContainer");
 var recordBtn = document.getElementById("jsRecordBtn");
 var videoPreview = document.getElementById("jsVideoPreview");
-var streamObject;
-var videoRecorder;
 
-var handleVideoData = function handleVideoData(event) {
-  var videoFile = event.data;
-  var link = document.createElement("a");
-  link.href = URL.createObjectURL(videoFile);
-  link.download = "recorded.webm";
-  document.body.appendChild(link);
-  link.click();
-};
-
-var stopRecording = function stopRecording() {
-  videoRecorder.stop();
-  recordBtn.removeEventListener("click", stopRecording);
-  recordBtn.addEventListener("click", getVideo);
-  recordBtn.innerHTML = "Start recording";
-};
-
-var startRecording = function startRecording() {
-  videoRecorder = new MediaRecorder(streamObject);
-  videoRecorder.start();
-  videoRecorder.addEventListener("dataavailable", handleVideoData);
-  recordBtn.addEventListener("click", stopRecording);
-};
-
-var getVideo = /*#__PURE__*/function () {
+var startRecording = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var stream;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -385,10 +360,7 @@ var getVideo = /*#__PURE__*/function () {
             _context.next = 3;
             return navigator.mediaDevices.getUserMedia({
               audio: true,
-              video: {
-                width: 1280,
-                height: 720
-              }
+              video: true
             });
 
           case 3:
@@ -396,37 +368,30 @@ var getVideo = /*#__PURE__*/function () {
             videoPreview.srcObject = stream;
             videoPreview.muted = true;
             videoPreview.play();
-            recordBtn.innerHTML = "Stop recording";
-            streamObject = stream;
-            startRecording();
-            _context.next = 15;
+            _context.next = 13;
             break;
 
-          case 12:
-            _context.prev = 12;
+          case 9:
+            _context.prev = 9;
             _context.t0 = _context["catch"](0);
-            recordBtn.innerHTML = "☹️ Cant record";
+            recordBtn.innerHTML = " Can't record";
+            recordBtn.removeEventListener("click", startRecording);
 
-          case 15:
-            _context.prev = 15;
-            recordBtn.removeEventListener("click", getVideo);
-            return _context.finish(15);
-
-          case 18:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 12, 15, 18]]);
+    }, _callee, null, [[0, 9]]);
   }));
 
-  return function getVideo() {
+  return function startRecording() {
     return _ref.apply(this, arguments);
   };
 }();
 
 function init() {
-  recordBtn.addEventListener("click", getVideo);
+  recordBtn.addEventListener("click", startRecording);
 }
 
 if (recorderContainer) {
