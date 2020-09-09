@@ -103,21 +103,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var addCommentForm = document.getElementById("jsAddComment");
-var commentList = document.getElementById("jsCommentList");
-var commentNumber = document.getElementById("jsCommentNumber");
-
-var increaseNumber = function increaseNumber() {
-  commentNumber.innerHTML = parseInt(commentNumber.innerHTML, 10) + 1;
-};
-
-var addComment = function addComment(comment) {
-  var li = document.createElement("li");
-  var span = document.createElement("span");
-  span.innerHTML = comment;
-  li.appendChild(span);
-  commentList.prepend(li);
-  increaseNumber();
-};
 
 var sendComment = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(comment) {
@@ -138,10 +123,7 @@ var sendComment = /*#__PURE__*/function () {
 
           case 3:
             response = _context.sent;
-
-            if (response.status === 200) {
-              addComment(comment);
-            }
+            console.log(response);
 
           case 5:
           case "end":
